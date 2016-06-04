@@ -8,9 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.inputPercentage) EditText inputPercentage;
     @BindView(R.id.inputBill) EditText inputBill;
     @BindView(R.id.txtRip) TextView txtRip;*/
+    @BindView(R.id.inputPercentage)
+    EditText inputPercentage;
+
+    @BindView(R.id.txtRip)
+    TextView txtRip;
+
+    @BindView(R.id.inputBill)
+    EditText inputBill;
 
     private final static int TIP_STEP_CHANGE = 1;
 
@@ -73,5 +85,47 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Hello Android Butter Knife", Toast.LENGTH_LONG).show();
 
         hideKeyboard();
+
+        String strImputToal = inputBill.getText().toString().trim();
+        if (!strImputToal.isEmpty()){
+            double total = Double.parseDouble(strImputToal);
+            int tipPercentage = getTipPercentage();
+            double tip = total*(tipPercentage/100d);
+
+            String srtTop = String.format(getString(R.string.global_message_tip), tip);
+            txtRip.setVisibility(View.VISIBLE);
+            txtRip.setText(srtTop);
+        }
+    }
+
+    @OnClick(R.id.btnIncrease)
+    public void handleClickIncrease(){
+        hideKeyboard();
+        handleTipChange(TIP_STEP_CHANGE);
+    }
+
+    private void handleTipChange(int i) {
+        int tipPercentage = getTipPercentage();
+        tipPercentage += i;
+        if (tipPercentage > 0){
+            inputPercentage.setText(String.valueOf(tipPercentage));
+        }
+    }
+
+    @OnClick(R.id.btnDecrease)
+    public void handleClickDecrease(){
+        hideKeyboard();
+        handleTipChange(-TIP_STEP_CHANGE);
+    }
+
+    private int getTipPercentage() {
+        int tipPercentage = DEFAULT_TIP_PERCENTAGE;
+        String strInputPercentage = inputPercentage.getText().toString().trim();
+        if (!strInputPercentage.isEmpty()){
+            tipPercentage = Integer.parseInt(strInputPercentage);
+        }else{
+            inputPercentage.setText(String.valueOf(tipPercentage));
+        }
+        return tipPercentage;
     }
 }
