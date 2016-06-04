@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.galileo.diegusweb.tipcalc.R;
+import com.galileo.diegusweb.tipcalc.adapters.OrderClickListener;
 import com.galileo.diegusweb.tipcalc.adapters.TipAdapter;
 import com.galileo.diegusweb.tipcalc.model.TipRecord;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TipHistoryListFragment extends Fragment implements TipHistoryListFragmentListener {
+public class TipHistoryListFragment extends Fragment implements TipHistoryListFragmentListener, OrderClickListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -52,7 +52,7 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
 
     private void initAdapter() {
         if (adapter == null){
-            adapter = new TipAdapter(getActivity().getApplicationContext(), new ArrayList<TipRecord>());
+            adapter = new TipAdapter(getActivity().getApplicationContext(), this);
         }
     }
 
@@ -65,5 +65,10 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
     @Override
     public void clearList() {
         adapter.clear();
+    }
+
+    @Override
+    public void onItemCLick(TipRecord tipRecord) {
+        Toast.makeText(getActivity(), tipRecord.getDateFormatted(), Toast.LENGTH_SHORT).show();
     }
 }

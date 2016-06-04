@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.galileo.diegusweb.tipcalc.R;
 import com.galileo.diegusweb.tipcalc.model.TipRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,12 +20,15 @@ import butterknife.ButterKnife;
  * Created by HP on 04/06/2016.
  */
 public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
-    Context context;
-    List<TipRecord> dataset;
+    private Context context;
+    private List<TipRecord> dataset;
+    private OrderClickListener onItemClickListener;
 
-    public TipAdapter(Context context, List<TipRecord> dataset){
-        this.dataset = dataset;
+
+    public TipAdapter(Context context, OrderClickListener onItemClickListener){
+        this.dataset = new ArrayList<TipRecord>();
         this.context = context;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -41,6 +45,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
                 element.getTip());
 
         holder.txtContent.setText(strTip);
+        holder.setOnItemClickListener(element, onItemClickListener);
     }
 
     @Override
@@ -65,6 +70,16 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
         public ViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public void setOnItemClickListener(final TipRecord element, final OrderClickListener onItemClickListener) {
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemCLick(element);
+                }
+            });
         }
     }
 }
