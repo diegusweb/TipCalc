@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.galileo.diegusweb.tipcalc.fragments.TipHistoryListFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final static int TIP_STEP_CHANGE = 1;
 
     private final static int DEFAULT_TIP_PERCENTAGE =10;
+    private TipHistoryListFragment fragmentListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        //init fragment
+        TipHistoryListFragment fragment = (TipHistoryListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragemntList);
+
+        fragment.setRetainInstance(true);
+        fragmentListener = fragment;
     }
 
     @Override
@@ -93,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             double tip = total*(tipPercentage/100d);
 
             String srtTop = String.format(getString(R.string.global_message_tip), tip);
+
+            fragmentListener.action(srtTop);
+
             txtRip.setVisibility(View.VISIBLE);
             txtRip.setText(srtTop);
         }
