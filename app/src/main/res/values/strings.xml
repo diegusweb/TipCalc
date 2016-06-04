@@ -11,7 +11,7 @@
     <string name="main.menu.action.about">Acerca de</string>
 
     <string name="global.message.tip">Propina %.1f</string>
-    <string name="tipdetail.message.tip">total %.1f</string>
+    <string name="tipdetail.message.bill">total %.1f</string>
 
 
 </resources>

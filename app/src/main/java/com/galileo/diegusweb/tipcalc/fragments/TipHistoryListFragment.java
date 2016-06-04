@@ -1,6 +1,7 @@
 package com.galileo.diegusweb.tipcalc.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,9 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.galileo.diegusweb.tipcalc.R;
+import com.galileo.diegusweb.tipcalc.activities.TipDetailActivity;
 import com.galileo.diegusweb.tipcalc.adapters.OrderClickListener;
 import com.galileo.diegusweb.tipcalc.adapters.TipAdapter;
 import com.galileo.diegusweb.tipcalc.model.TipRecord;
@@ -69,6 +70,12 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
 
     @Override
     public void onItemCLick(TipRecord tipRecord) {
-        Toast.makeText(getActivity(), tipRecord.getDateFormatted(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), TipDetailActivity.class);
+        //Toast.makeText(getActivity(), tipRecord.getDateFormatted(), Toast.LENGTH_SHORT).show();
+        intent.putExtra(TipDetailActivity.TIP_KEY, tipRecord.getTip());
+        intent.putExtra(TipDetailActivity.BILL_TOTAL_KEY, tipRecord.getBill());
+        intent.putExtra(TipDetailActivity.DATA_KEY, tipRecord.getDateFormatted());
+
+        startActivity(intent);
     }
 }
