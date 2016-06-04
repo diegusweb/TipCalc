@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:TipCalc="http://schemas.android.com/apk/res-auto" tools:context=".MainActivity"
+xmlns:tools="http://schemas.android.com/tools">
+
+<item android:id="@+id/action_about" android:icon="@drawable/ic_action_search" android:title="@string/main.menu.action.about"
+    TipCalc:showAsAction="ifRoom">
+
+</item>
+</menu>
+
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:TipCalc="http://schemas.android.com/apk/res-auto" >
+<item android:id="@+id/action_about"
+android:icon="@drawable/ic_action_search"
+android:title="Demo"
+    TipCalc:showAsAction="ifRoom"  />
+    ...
+    </menu>-->
