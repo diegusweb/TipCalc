@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.galileo.diegusweb.tipcalc.fragments.TipHistoryListFragment;
+import com.galileo.diegusweb.tipcalc.model.TipRecord;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,12 +103,17 @@ public class MainActivity extends AppCompatActivity {
         if (!strImputToal.isEmpty()){
             double total = Double.parseDouble(strImputToal);
             int tipPercentage = getTipPercentage();
-            double tip = total*(tipPercentage/100d);
+            //double tip = total*(tipPercentage/100d);
 
-            String srtTop = String.format(getString(R.string.global_message_tip), tip);
+            TipRecord tipRecord = new TipRecord();
 
-            fragmentListener.action(srtTop);
+            tipRecord.setBill(total);
+            tipRecord.setTipPercentage(tipPercentage);
+            tipRecord.setTimestamp(new Date());
 
+            String srtTop = String.format(getString(R.string.global_message_tip), tipRecord.getTip());
+
+            fragmentListener.addToList(tipRecord);
             txtRip.setVisibility(View.VISIBLE);
             txtRip.setText(srtTop);
         }
@@ -129,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
     public void handleClickDecrease(){
         hideKeyboard();
         handleTipChange(-TIP_STEP_CHANGE);
+    }
+
+    @OnClick(R.id.btnClear)
+    public void handleClickClear(){
+        fragmentListener.clearList();
     }
 
     private int getTipPercentage() {

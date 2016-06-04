@@ -8,11 +8,22 @@ import java.util.Date;
  */
 public class TipRecord {
     private double tip;
+    private double bill;
     private int tipPercentage;
     private Date timestamp;
 
+    public double getBill() {
+        return bill;
+    }
+
+    public void setBill(double bill) {
+        this.bill = bill;
+    }
+
+
     public double getTip() {
-        return tip;
+
+        return getBill()*(getTipPercentage()/100d);
     }
 
     public void setTip(double tip) {
